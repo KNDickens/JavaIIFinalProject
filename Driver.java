@@ -9,6 +9,8 @@ public class Driver {
 		String setName = "ERROR";
 		String setName2 = "ERROR";
 		
+		Soldier[][] board = new Soldier[4][4];
+		
 		System.out.println("Melee units are high attack with high health low range.");
 		System.out.println("Ranged units have low attack, low health, but high range.");
 		System.out.println("Banner units have low attack, high health, and low range. They are used to link melee units into a phalanx");
@@ -28,4 +30,17 @@ public class Driver {
 		System.out.println("'s turn. Please select a unit.");
 		
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	public static void showBoard(Soldier[][] board)
+	{
+		
+	}
+	
 }
