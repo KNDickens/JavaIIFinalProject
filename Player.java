@@ -2,7 +2,6 @@
 public class Player {
 	private String name = "";
 	private LinkedList myGuys;
-
 	
 	public String getName() {
 		return name;

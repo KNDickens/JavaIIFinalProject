@@ -31,7 +31,7 @@ public class Driver {
 		
 		showBoard(board);
 		
-		do {
+    do {
 			
 		}while (End != true);
 		
