@@ -65,7 +65,6 @@ public class Driver {
 				end = checkWin(playerOne, playerTwo);
 				current.roundIncremenet();
 				current = playerTwo;
-
 			}
 			else
 			{
@@ -74,7 +73,7 @@ public class Driver {
 				current.roundIncremenet();
 				current = playerOne;
 			}
-		}while (end != true);
+		}while (End != true);
 	}
 
 	public static Player playTurn(Player current, Soldier[][] board)
