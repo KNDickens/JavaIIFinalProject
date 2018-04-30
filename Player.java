@@ -1,7 +1,8 @@
 
 public class Player {
 	private String name = "";
-
+	private LinkedList myGuys;
+	
 	public String getName() {
 		return name;
 	}
@@ -10,5 +11,8 @@ public class Player {
 		this.name = name;
 	}
 
-
+	public int findMe(Soldier me)
+	{
+		return myGuys.findMe(me);
+	}
 }
