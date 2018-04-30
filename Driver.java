@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Driver {
 	public static void main(String[] args) throws IOException
 	{
-
+		
 		Scanner input = new Scanner(System.in);
 		
 		Soldier[][] board = new Soldier[8][8];
@@ -12,7 +12,7 @@ public class Driver {
 		System.out.println("Melee units are high attack with high health low range.");
 		System.out.println("Ranged units have low attack, low health, but high range.");
 		System.out.println("Banner units have low attack, high health, and low range. They are used to link melee units into a phalanx");
-		System.out.println("Phalanx units attack and move as one powerful group.");
+		System.out.println("Phalanx groups attack and move as one powerful entity.");
 		
 		Player playerOne = new Player();
 		Player playerTwo = new Player();
@@ -59,17 +59,60 @@ public class Driver {
 		showBoard(board);
 		
 		do {
-			
-		}while (false);
-		
-		
-		
+			if(current == playerOne)
+			{
+				playTurn(current, board);
+				checkWin(playerOne, playerTwo);
+				current.roundIncremenet();
+				current = playerTwo;
+
+			}
+			else
+			{
+				playTurn(current, board);
+				checkWin(playerOne, playerTwo);
+				current.roundIncremenet();
+				current = playerOne;
+			}
+		}while (End != true);
+	}
+
+	public static Player playTurn(Player current, Soldier[][] board)
+	{
+		Scanner turnInput = new Scanner(System.in);
+		System.out.println(current.getName() + "'s turn: ");
+		showBoard(board);
+		System.out.println("User prompt / input goes around here later");
+		return null;
 	}
 	
 	
 	
+	public static boolean checkWin(Player playerOne, Player playerTwo)
+	{
+		if(playerOne.getRoundCounter() >= 5)
+		{
+			if(playerOne.getMyGuys().getTotalHealth()>playerTwo.getMyGuys().getTotalHealth())
+			{
+				System.out.println(playerOne.getName() + " Wins!");
+				return true;
+			}
+			else if(playerTwo.getTotalHealth()>playerOne.getTotalHealth())
+			{
+				System.out.println(playerTwo.getName() + "Wins!");
+				return true;
+			}
+			else(playerTwo.getTotalHealth()==playerOne.getTotalHealth())
+			{
+				System.out.println("Draw!");
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	
+
 	
 	//Kyle's Printf game is the strongest in the land.
 	public static void showBoard(Soldier[][] board)
@@ -84,6 +127,7 @@ public class Driver {
 					{
 					case 0: System.out.printf("%15s", "***************");
 						break;
+
 					case 1: System.out.printf("*%13s", (board[row][col]==null ? "" : 
 						board[row][col].getMyPlayer().getName().length()<14 ? 
 						board[row][col].getMyPlayer().getName() : 
