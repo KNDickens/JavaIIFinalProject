@@ -1,22 +1,10 @@
 
 public class Banner extends Soldier{
+	//Low Attack, High Health, Low Range, Adjacent Units move as phalanx
 
-	@Override
-	public void Move(int compass) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Soldier Linked() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void MoveAll(int compass) {
-		// TODO Auto-generated method stub
-		
+	Banner()
+	{
+		super(5,1,1);
 	}
 
 }
