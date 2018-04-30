@@ -19,9 +19,36 @@ public class Driver {
 		
 		System.out.println("Enter Player One's Name: ");
 		playerOne.setName(input.nextLine());
-		
+		System.out.println("Time to choose " + playerOne.getName() + "'s soldiers. You get 8 Soldiers. \n" +
+				"(0) Melee, (1) Ranged, (2) Banner");
+		for(int i = 0; i < 8; i++)
+		{
+			playerOne.addSoldier(input.nextInt());
+			playerOne.getMyGuys().getHead().getMyGuy().setMyPlayer(playerOne);
+		}
+		input.nextLine();
 		System.out.println("Enter Player Two's Name: ");
 		playerTwo.setName(input.nextLine());
+		System.out.println("Time to choose " + playerTwo.getName() + "'s soldiers. You get 8 Soldiers. \n" +
+				"(0) Melee, (1) Ranged, (2) Banner");
+		for(int i = 0; i < 8; i++)
+		{
+			playerTwo.addSoldier(input.nextInt());
+			playerTwo.getMyGuys().getHead().getMyGuy().setMyPlayer(playerTwo);
+		}
+		
+		SoldierNode curNode = playerOne.getMyGuys().getHead();
+		for (int i = 0; i < 8; i++)
+		{
+			board[0][i] = curNode.getMyGuy();
+			curNode = curNode.getNextUnit();
+		}
+		curNode = playerTwo.getMyGuys().getHead();
+		for (int i = 0; i < 8; i++)
+		{
+			board[7][i] = curNode.getMyGuy();
+			curNode = curNode.getNextUnit();
+		}
 		
 		boolean End = true;
 		
@@ -100,18 +127,28 @@ public class Driver {
 					{
 					case 0: System.out.printf("%15s", "***************");
 						break;
-					case 1: System.out.printf("*%14s", (board[row][col]==null ? "" : 
-						board[row][col].getMyPlayer().getName().length()<15 ? 
+
+					case 1: System.out.printf("*%13s", (board[row][col]==null ? "" : 
+						board[row][col].getMyPlayer().getName().length()<14 ? 
 						board[row][col].getMyPlayer().getName() : 
-						board[row][col].getMyPlayer().getName().substring(0, 14)));
+						board[row][col].getMyPlayer().getName().substring(0, 13)));
+						System.out.print(" ");
 						break;
-					case 2: System.out.printf("*%14s", (board[row][col]==null ? "" : board[row][col].getHealth()));
+					case 2: System.out.printf("*%13s", (board[row][col]==null ? "" : "Health: " + 
+						board[row][col].getHealth()));
+						System.out.print(" ");
 						break;
-					case 3: System.out.printf("*%14s", (board[row][col]==null ? "" : board[row][col].getAttack()));
+					case 3: System.out.printf("*%13s", (board[row][col]==null ? "" : "Attack: " + 
+						board[row][col].getAttack()));
+						System.out.print(" ");
 						break;
-					case 4: System.out.printf("*%14s", (board[row][col]==null ? "" : board[row][col].getRange()));
+					case 4: System.out.printf("*%13s", (board[row][col]==null ? "" : "Range:  " + 
+						board[row][col].getRange()));
+						System.out.print(" ");
 						break;
-					case 5: System.out.printf("*%14s", (board[row][col]==null ? "" : "Unit #: " + board[row][col].getMyPlayer().findMe(board[row][col])));
+					case 5: System.out.printf("*%13s", (board[row][col]==null ? "" : "Unit #: " + 
+						board[row][col].getMyPlayer().findMe(board[row][col])));
+						System.out.print(" ");
 						break; //if -1 returns from findMe, something is busted.
 					}
 				}
