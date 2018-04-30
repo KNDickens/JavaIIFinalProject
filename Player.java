@@ -43,6 +43,7 @@ public class Player {
 
 	public void setMyGuys(LinkedList myGuys) {
 		this.myGuys = myGuys;
+	}
 	
 	public void addSoldier(int choice)
 	{

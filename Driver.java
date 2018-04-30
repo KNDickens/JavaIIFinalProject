@@ -50,7 +50,7 @@ public class Driver {
 			curNode = curNode.getNextUnit();
 		}
 		
-		boolean End = true;
+		boolean end = false;
 		
 		Player current = playerOne;
 		
@@ -62,15 +62,14 @@ public class Driver {
 			if(current == playerOne)
 			{
 				playTurn(current, board);
-				checkWin(playerOne, playerTwo);
+				end = checkWin(playerOne, playerTwo);
 				current.roundIncremenet();
 				current = playerTwo;
-
 			}
 			else
 			{
 				playTurn(current, board);
-				checkWin(playerOne, playerTwo);
+				end = checkWin(playerOne, playerTwo);
 				current.roundIncremenet();
 				current = playerOne;
 			}
@@ -90,19 +89,19 @@ public class Driver {
 	
 	public static boolean checkWin(Player playerOne, Player playerTwo)
 	{
-		if(playerOne.getRoundCounter() >= 5)
+		if(playerOne.getRoundCounter() >= 10)
 		{
 			if(playerOne.getMyGuys().getTotalHealth()>playerTwo.getMyGuys().getTotalHealth())
 			{
 				System.out.println(playerOne.getName() + " Wins!");
 				return true;
 			}
-			else if(playerTwo.getTotalHealth()>playerOne.getTotalHealth())
+			else if(playerTwo.getMyGuys().getTotalHealth()>playerOne.getMyGuys().getTotalHealth())
 			{
 				System.out.println(playerTwo.getName() + "Wins!");
 				return true;
 			}
-			else(playerTwo.getTotalHealth()==playerOne.getTotalHealth())
+			else
 			{
 				System.out.println("Draw!");
 				return true;
@@ -128,10 +127,10 @@ public class Driver {
 					case 0: System.out.printf("%15s", "***************");
 						break;
 
-					case 1: System.out.printf("*%13s", (board[row][col]==null ? "" : 
-						board[row][col].getMyPlayer().getName().length()<14 ? 
+					case 1: System.out.printf("* %12s", (board[row][col]==null ? "" : 
+						board[row][col].getMyPlayer().getName().length()<13 ? 
 						board[row][col].getMyPlayer().getName() : 
-						board[row][col].getMyPlayer().getName().substring(0, 13)));
+						board[row][col].getMyPlayer().getName().substring(0, 12)));
 						System.out.print(" ");
 						break;
 					case 2: System.out.printf("*%13s", (board[row][col]==null ? "" : "Health: " + 
