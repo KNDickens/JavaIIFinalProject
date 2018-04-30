@@ -7,7 +7,7 @@ public class Driver {
 
 		Scanner input = new Scanner(System.in);
 		
-		Soldier[][] board = new Soldier[4][4];
+		Soldier[][] board = new Soldier[8][8];
 		
 		System.out.println("Melee units are high attack with high health low range.");
 		System.out.println("Ranged units have low attack, low health, but high range.");
@@ -26,20 +26,12 @@ public class Driver {
 		boolean End = false;
 		
 		Player current = playerOne;
-
+		
 		System.out.println(current.getName() + "'s turn. Please select a unit.");
 		
 		showBoard(board);
 		
-    do {
-			
-			//Play Turn Method
-			if(current == playerOne) {
-				current = playerTwo;
-			}
-			else{
-				current = playerOne;
-			}
+		do {
 			
 		}while (End != true);
 		
@@ -66,16 +58,19 @@ public class Driver {
 					{
 					case 0: System.out.printf("%15s", "***************");
 						break;
-					case 1: System.out.printf("*%14s", (board[row][col]==null?"":board[row][col].getMyPlayer().getName()));
+					case 1: System.out.printf("*%14s", (board[row][col]==null ? "" : 
+						board[row][col].getMyPlayer().getName().length()<15 ? 
+						board[row][col].getMyPlayer().getName() : 
+						board[row][col].getMyPlayer().getName().substring(0, 14)));
 						break;
-					case 2: System.out.printf("*%14s", (board[row][col]==null?"":board[row][col].getHealth()));
+					case 2: System.out.printf("*%14s", (board[row][col]==null ? "" : board[row][col].getHealth()));
 						break;
-					case 3: System.out.printf("*%14s", (board[row][col]==null?"":board[row][col].getAttack()));
+					case 3: System.out.printf("*%14s", (board[row][col]==null ? "" : board[row][col].getAttack()));
 						break;
-					case 4: System.out.printf("*%14s", (board[row][col]==null?"":board[row][col].getRange()));
+					case 4: System.out.printf("*%14s", (board[row][col]==null ? "" : board[row][col].getRange()));
 						break;
-					case 5: System.out.printf("*%14s", (board[row][col]==null?"":board[row][col].getMyPlayer().findMe(board[row][col])));
-						break;
+					case 5: System.out.printf("*%14s", (board[row][col]==null ? "" : "Unit #: " + board[row][col].getMyPlayer().findMe(board[row][col])));
+						break; //if -1 returns from findMe, something is busted.
 					}
 				}
 				System.out.println("*");
