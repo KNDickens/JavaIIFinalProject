@@ -23,7 +23,7 @@ public class Driver {
 		System.out.println("Enter Player Two's Name: ");
 		playerTwo.setName(input.nextLine());
 		
-		boolean End = false;
+		boolean End = true;
 		
 		Player current = playerOne;
 		
