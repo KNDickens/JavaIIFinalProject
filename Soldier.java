@@ -1,4 +1,4 @@
 
-public abstract class Soldier implements Movable{
+public abstract class Soldier implements Movable <Soldier>{
 
 }
