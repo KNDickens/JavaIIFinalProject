@@ -6,8 +6,6 @@ public class Driver {
 	{
 
 		Scanner input = new Scanner(System.in);
-		String setName = "ERROR";
-		String setName2 = "ERROR";
 		
 		System.out.println("Melee units are high attack with high health low range.");
 		System.out.println("Ranged units have low attack, low health, but high range.");
@@ -23,9 +21,17 @@ public class Driver {
 		System.out.println("Enter Player Two's Name: ");
 		playerTwo.setName(input.nextLine());
 		
+		boolean End = false;
+		
 		Player current = playerOne;
 		
-		System.out.println("'s turn. Please select a unit.");
+		System.out.println(current.getName() + "'s turn. Please select a unit.");
+		
+		do {
+			
+		}while (End != true);
+		
+		
 		
 	}
 }
