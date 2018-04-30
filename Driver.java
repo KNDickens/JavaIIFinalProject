@@ -24,10 +24,18 @@ public class Driver {
 		boolean End = false;
 		
 		Player current = playerOne;
-		
+
 		System.out.println(current.getName() + "'s turn. Please select a unit.");
 		
 		do {
+			
+			//Play Turn Method
+			if(current == playerOne) {
+				current = playerTwo;
+			}
+			else{
+				current = playerOne;
+			}
 			
 		}while (End != true);
 		
