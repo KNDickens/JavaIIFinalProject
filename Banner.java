@@ -5,6 +5,7 @@ public class Banner extends Soldier{
 	Banner()
 	{
 		super(5,1,1);
+		setType("banner");
 	}
 
 }

@@ -5,6 +5,7 @@ public abstract class Soldier implements Movable <Soldier>{
 	private int attack;
 	private int range;
 	private Player myPlayer;
+	private String type;
 	
 	Soldier()
 	{
@@ -67,5 +68,13 @@ public abstract class Soldier implements Movable <Soldier>{
 
 	public void setMyPlayer(Player myPlayer) {
 		this.myPlayer = myPlayer;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }
