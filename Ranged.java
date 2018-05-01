@@ -5,6 +5,7 @@ public class Ranged extends Soldier{
 	Ranged()
 	{
 		super(3,1,5);
+		setType("ranged");
 	}
 
 }
