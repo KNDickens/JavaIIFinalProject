@@ -13,214 +13,103 @@ public class Driver {
 		System.out.println("Ranged units have low attack, low health, but high range.");
 		System.out.println("Banner units have low attack, high health, and low range. They are used to link melee units into a phalanx");
 		System.out.println("Phalanx groups attack and move as one powerful entity.");
+		// explanation of what the pieces are
+		System.out.println("The player with the most health at the end of the game wins.");
 		
-		Player playerOne = new Player();
-		Player playerTwo = new Player();
+		Player playerOne = new Player(); // initializing player one
+		Player playerTwo = new Player(); // initializing player two
 		
-		System.out.println("Enter Player One's Name: ");
-		playerOne.setName(input.nextLine());
-		System.out.println("Time to choose " + playerOne.getName() + "'s soldiers. You get 8 Soldiers. \n" +
-				"(0) Melee, (1) Ranged, (2) Banner");
-		for(int i = 0; i < 8; i++)
+		System.out.println("Enter Player One's Name: "); // allows for the player to enter a name
+		playerOne.setName(input.nextLine()); // reads in the next line and sets it to player one as a string
+		System.out.println(playerOne.getName() + " please select the units you will field. You get 8 Soldiers. \n" + 
+				"(0) Melee, (1) Ranged, (2) Banner"); // prompts the user for input to build the army list
+		for(int i = 0; i < 8; i++) // loop 8 times
 		{
-			playerOne.addSoldier(input.nextInt());
-			playerOne.getMyGuys().getHead().getMyGuy().setMyPlayer(playerOne);
+			playerOne.addSoldier(input.nextInt()); // reads in an int to field the soldier
+			playerOne.getMyGuys().getHead().getMyGuy().setMyPlayer(playerOne); // sets the ownership of the new unit
 		}
-		input.nextLine();
-		System.out.println("Enter Player Two's Name: ");
-		playerTwo.setName(input.nextLine());
-		System.out.println("Time to choose " + playerTwo.getName() + "'s soldiers. You get 8 Soldiers. \n" +
-				"(0) Melee, (1) Ranged, (2) Banner");
-		for(int i = 0; i < 8; i++)
+		input.nextLine(); // garbage catcher
+		System.out.println("Enter Player Two's Name: "); // prompts the user to input a name
+		playerTwo.setName(input.nextLine()); // reads in the next line as a string and sets it to player two's name
+		System.out.println(playerOne.getName() + " please select the units you will field. You get 8 Soldiers. \n" +
+				"(0) Melee, (1) Ranged, (2) Banner"); // prompts the user for input to build the army list
+		for(int i = 0; i < 8; i++) // loop 8 times
 		{
-			playerTwo.addSoldier(input.nextInt());
-			playerTwo.getMyGuys().getHead().getMyGuy().setMyPlayer(playerTwo);
-		}
-		
-		SoldierNode curNode = playerOne.getMyGuys().getHead();
-		for (int i = 0; i < 8; i++)
-		{
-			board[0][i] = curNode.getMyGuy();
-			curNode = curNode.getNextUnit();
-		}
-		curNode = playerTwo.getMyGuys().getHead();
-		for (int i = 0; i < 8; i++)
-		{
-			board[7][i] = curNode.getMyGuy();
-			curNode = curNode.getNextUnit();
+			playerTwo.addSoldier(input.nextInt()); // reads in an int to field a soldier
+			playerTwo.getMyGuys().getHead().getMyGuy().setMyPlayer(playerTwo); // sets the ownership of the new unit
 		}
 		
-		boolean end = false;
+		SoldierNode curNode = playerOne.getMyGuys().getHead(); // grabs player one's army list
+		for (int i = 0; i < 8; i++) // loop 8 times
+		{
+			board[0][i] = curNode.getMyGuy(); // fills the board with the current unit
+			curNode = curNode.getNextUnit(); // goes from the current unit to the next one in the list
+		}
+		curNode = playerTwo.getMyGuys().getHead(); // grabs player two's army list
+		for (int i = 0; i < 8; i++) // loop 8 times
+		{
+			board[7][i] = curNode.getMyGuy(); // fills the board with the current unit
+			curNode = curNode.getNextUnit(); // changes from the current unit to the next one in the list
+		}
 		
-		Player current = playerOne;
+		boolean end = true; // boolean end initialized
 		
-		System.out.println(current.getName() + "'s turn. Please select a unit.");
+		Player current = playerOne; // sets current player to player one
 		
-		showBoard(board);
+		System.out.println(current.getName() + "'s turn. Please select a unit."); // prompts the user to select a unit
 		
-		do {
-			if(current == playerOne)
+		showBoard(board); // shows the board
+		
+		do { 
+			if(current == playerOne) // if the current player is player one
 			{
-				playTurn(current, board);
-				current.roundIncremenet();
-				current = playerTwo;
+				playTurn(current, board); // player one plays their turn
+				current.roundIncremenet(); // increment the round counter
+				current = playerTwo; // sets the player to player two
+
 			}
 			else
 			{
-				playTurn(current, board);
-				current.roundIncremenet();
-				current = playerOne;
+				playTurn(current, board); // player two plays their turn
+				current.roundIncremenet(); // increment the round counter
+				current = playerOne; // sets the player to player two
 			}
-			end = checkWin(playerOne, playerTwo);
-		}while (end != true);
+			end = checkWin(playerOne, playerTwo); // checks to see if the round counter has hit 10 rounds, if a player has lost all of their
+		}while (end != true); // cycles between player one and player two until 10 turns pass
 	}
 
-	public static Player playTurn(Player current, Soldier[][] board)
+	public static Player playTurn(Player current, Soldier[][] board) // play turn
 	{
-		Scanner turnInput = new Scanner(System.in);
-		System.out.println(current.getName() + "'s turn: ");
-		showBoard(board);
+		Scanner turnInput = new Scanner(System.in); // initialize an input used for the turn called turnInput
+		System.out.println(current.getName() + "'s turn: "); // prompts the user to take their turn
+		showBoard(board); // displays the board
 		System.out.println("User prompt / input goes around here later");
 		return null;
 	}
 	
-	public static void moveSoldier(Soldier move, int compass, Soldier[][] board)	
-	{
-		if (move != null)			
-		{
-			int x = -1,y = -1; 
-			for(int i = 0; i < 8; i++)			
-			{
-				for(int j = 0; j < 8; j++)				
-				{
-					if(board[i][j] == move)					
-					{
-						y=i;
-						x=j;
-					}
-				}
-			}
-			switch (compass)			
-			{
-			case 0: //north
-				if (y > 0)				
-				{
-					if (board[y-1][x] == null)					
-					{
-						board[y-1][x] = move;
-						board[y][x] = null;
-					}
-				}
-				break;
-			case 1: //east
-				if (x < 7)				
-				{
-					if (board[y][x+1] == null)					
-					{
-						board[y][x+1] = move;
-						board[y][x] = null;
-					}
-				}
-				break;
-			case 2: //south
-				if ( y < 7 )				
-				{
-					if (board[y+1][x] == null)					
-					{
-						board[y+1][x] = move;
-						board[y][x] = null;
-					}
-				}
-				break;
-			case 3: // west
-				if (x > 0)				
-				{
-					if (board[y][x-1] == null)					
-					{
-						board[y][x-1] = move;
-						board[y][x] = null;
-					}
-				}
-				break;
-			}
-			if (move.getType() == "banner")			
-			{
-				if(x<7)				
-				{
-					moveSoldier(board[y][x+1], compass, board);
-				}
-				if(y<7)				
-				{
-					moveSoldier(board[y+1][x], compass, board);
-				}
-				if(x>0)
-				{	
-					moveSoldier(board[y][x-1], compass, board);
-				}
-				if(y>0)				
-				{
-					moveSoldier(board[y-1][x], compass, board);
-				}
-			}
-			attack(x,y,board,compass,move);
-		}
-	}
 	
-	public static void attack(int x, int y, Soldier[][] board, int compass, Soldier attack)
-	{
-		for (int i = 0; i < attack.getRange(); i++)
-		{
-			switch (compass)
-			{
-			case 0: //[y-1][x]
-				if(board[y-1][x] != null && board[y-1][x].getMyPlayer()!=attack.getMyPlayer())
-				{
-					board[y-1][x].setHealth(board[y-1][x].getHealth() - attack.getAttack());
-				}
-				break;
-			case 1: //[y][x+1]
-				if(board[y][x+1] != null && board[y][x+1].getMyPlayer()!=attack.getMyPlayer())
-				{
-					board[y][x+1].setHealth(board[y][x+1].getHealth() - attack.getAttack());
-				}
-				break;
-			case 2: //[y+1][x]
-				if(board[y+1][x] != null && board[y+1][x].getMyPlayer()!=attack.getMyPlayer())
-				{
-					board[y+1][x].setHealth(board[y+1][x].getHealth() - attack.getAttack());
-				}
-				break;
-			case 3: //[y][x-1]
-				if(board[y][x-1] != null && board[y][x-1].getMyPlayer()!=attack.getMyPlayer())
-				{
-					board[y][x-1].setHealth(board[y][x-1].getHealth() - attack.getAttack());
-				}
-				break;
-			}
-		}
-	}
 	
-	public static boolean checkWin(Player playerOne, Player playerTwo)
+	public static boolean checkWin(Player playerOne, Player playerTwo) // checks to see if the player has won
 	{
-		if(playerOne.getRoundCounter() >= 10)
-		{
+		if(playerTwo.getRoundCounter() >= 10 || playerOne.getMyGuys().getTotalHealth() == 0 || playerTwo.getMyGuys().getTotalHealth() == 0)
+		{ // The game will end if the players play for 10 rounds or if a player runs out of units
 			if(playerOne.getMyGuys().getTotalHealth()>playerTwo.getMyGuys().getTotalHealth())
-			{
+			{ // if player one has more health than player two player one wins
 				System.out.println(playerOne.getName() + " Wins!");
-				return true;
+				return true; // return true to end the game
 			}
 			else if(playerTwo.getMyGuys().getTotalHealth()>playerOne.getMyGuys().getTotalHealth())
-			{
+			{ // if player two has more health than player one player two wins
 				System.out.println(playerTwo.getName() + "Wins!");
-				return true;
+				return true; // return true to end the game
 			}
-			else
+			else // if neither player has more health than the other and they have gone through all of their units it is a draw
 			{
 				System.out.println("Draw!");
-				return true;
+				return true; // return true to end the game
 			}
 		}
-		return false;
+		return false; // return false to continue the game
 	}
 	
 	
@@ -240,10 +129,10 @@ public class Driver {
 					case 0: System.out.printf("%15s", "***************");
 						break;
 
-					case 1: System.out.printf("* %12s", (board[row][col]==null ? "" : 
-						board[row][col].getMyPlayer().getName().length()<13 ? 
+					case 1: System.out.printf("*%13s", (board[row][col]==null ? "" : 
+						board[row][col].getMyPlayer().getName().length()<14 ? 
 						board[row][col].getMyPlayer().getName() : 
-						board[row][col].getMyPlayer().getName().substring(0, 12)));
+						board[row][col].getMyPlayer().getName().substring(0, 13)));
 						System.out.print(" ");
 						break;
 					case 2: System.out.printf("*%13s", (board[row][col]==null ? "" : "Health: " + 
