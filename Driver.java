@@ -154,19 +154,19 @@ public class Driver {
 			}
 			if (move.getType() == "banner")			
 			{
-				if(x<7)				
+				if(x<7 && board[y][x+1] != move && board[y][x+1].getMyPlayer() == move.getMyPlayer())				
 				{
 					moveSoldier(board[y][x+1], compass, board);
 				}
-				if(y<7)				
+				if(y<7 && board[y+1][x] != move && board[y+1][x].getMyPlayer() == move.getMyPlayer())				
 				{
 					moveSoldier(board[y+1][x], compass, board);
 				}
-				if(x>0)
+				if(x>0 && board[y][x-1] != move && board[y][x-1].getMyPlayer() == move.getMyPlayer())
 				{	
 					moveSoldier(board[y][x-1], compass, board);
 				}
-				if(y>0)				
+				if(y>0 && board[y-1][x] != move && board[y-1][x].getMyPlayer() == move.getMyPlayer())				
 				{
 					moveSoldier(board[y-1][x], compass, board);
 				}
@@ -187,6 +187,11 @@ public class Driver {
 					if(board[y-1][x] != null && board[y-1][x].getMyPlayer()!=attack.getMyPlayer())
 					{
 						board[y-1][x].setHealth(board[y-1][x].getHealth() - attack.getAttack());
+						if (board[y-1][x].getHealth() < 1)
+						{
+							board[y-1][x].getMyPlayer().getMyGuys().killByIndex(
+								board[y-1][x].getMyPlayer().getMyGuys().findMe(board[y-1][x]));
+						}
 					}
 				}
 				break;
@@ -196,6 +201,11 @@ public class Driver {
 					if(board[y][x+1] != null && board[y][x+1].getMyPlayer()!=attack.getMyPlayer())
 					{
 						board[y][x+1].setHealth(board[y][x+1].getHealth() - attack.getAttack());
+						if (board[y][x+1].getHealth() < 1)
+						{
+							board[y][x+1].getMyPlayer().getMyGuys().killByIndex(
+								board[y][x+1].getMyPlayer().getMyGuys().findMe(board[y][x+1]));
+						}
 					}
 				}	
 				break;
@@ -205,6 +215,11 @@ public class Driver {
 					if(board[y+1][x] != null && board[y+1][x].getMyPlayer()!=attack.getMyPlayer())
 					{	
 						board[y+1][x].setHealth(board[y+1][x].getHealth() - attack.getAttack());
+						if (board[y+1][x].getHealth() < 1)
+						{
+							board[y+1][x].getMyPlayer().getMyGuys().killByIndex(
+								board[y+1][x].getMyPlayer().getMyGuys().findMe(board[y+1][x]));
+						}						
 					}
 				}
 				break;
@@ -214,6 +229,11 @@ public class Driver {
 					if(board[y][x-1] != null && board[y][x-1].getMyPlayer()!=attack.getMyPlayer())
 					{
 						board[y][x-1].setHealth(board[y][x-1].getHealth() - attack.getAttack());
+						if (board[y][x-1].getHealth() < 1)
+						{
+							board[y][x-1].getMyPlayer().getMyGuys().killByIndex(
+								board[y][x-1].getMyPlayer().getMyGuys().findMe(board[y][x-1]));
+						}
 					}
 				}
 				break;
