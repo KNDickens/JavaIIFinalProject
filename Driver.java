@@ -83,7 +83,11 @@ public class Driver {
 		Scanner turnInput = new Scanner(System.in); // initialize an input used for the turn called turnInput
 		System.out.println(current.getName() + "'s turn: "); // prompts the user to take their turn
 		showBoard(board); // displays the board
-		System.out.println("User prompt / input goes around here later");
+		System.out.println("Please select the unit you wish move");
+		int soldierSelect = turnInput.nextInt();
+		System.out.println("Select the direction you would like to move them.");
+		int moveSelect = turnInput.nextInt();
+		moveSoldier(current.getMyGuys().getByIndex(soldierSelect), moveSelect, board);
 		return null;
 	}
 	
