@@ -87,6 +87,123 @@ public class Driver {
 		return null;
 	}
 	
+
+	
+	public static void moveSoldier(Soldier move, int compass, Soldier[][] board)	
+	{
+		if (move != null)			
+		{
+			int x = -1,y = -1; 
+			for(int i = 0; i < 8; i++)			
+			{
+				for(int j = 0; j < 8; j++)				
+				{
+					if(board[i][j] == move)					
+					{
+						y=i;
+						x=j;
+					}
+				}
+			}
+			switch (compass)			
+			{
+			case 0: //north
+				if (y > 0)				
+				{
+					if (board[y-1][x] == null)					
+					{
+						board[y-1][x] = move;
+						board[y][x] = null;
+					}
+				}
+				break;
+			case 1: //east
+				if (x < 7)				
+				{
+					if (board[y][x+1] == null)					
+					{
+						board[y][x+1] = move;
+						board[y][x] = null;
+					}
+				}
+				break;
+			case 2: //south
+				if ( y < 7 )				
+				{
+					if (board[y+1][x] == null)					
+					{
+						board[y+1][x] = move;
+						board[y][x] = null;
+					}
+				}
+				break;
+			case 3: // west
+				if (x > 0)				
+				{
+					if (board[y][x-1] == null)					
+					{
+						board[y][x-1] = move;
+						board[y][x] = null;
+					}
+				}
+				break;
+			}
+			if (move.getType() == "banner")			
+			{
+				if(x<7)				
+				{
+					moveSoldier(board[y][x+1], compass, board);
+				}
+				if(y<7)				
+				{
+					moveSoldier(board[y+1][x], compass, board);
+				}
+				if(x>0)
+				{	
+					moveSoldier(board[y][x-1], compass, board);
+				}
+				if(y>0)				
+				{
+					moveSoldier(board[y-1][x], compass, board);
+				}
+			}
+			attack(x,y,board,compass,move);
+		}
+	}
+	
+	public static void attack(int x, int y, Soldier[][] board, int compass, Soldier attack)
+	{
+		for (int i = 0; i < attack.getRange(); i++)
+		{
+			switch (compass)
+			{
+			case 0: //[y-1][x]
+				if(board[y-1][x] != null && board[y-1][x].getMyPlayer()!=attack.getMyPlayer())
+				{
+					board[y-1][x].setHealth(board[y-1][x].getHealth() - attack.getAttack());
+				}
+				break;
+			case 1: //[y][x+1]
+				if(board[y][x+1] != null && board[y][x+1].getMyPlayer()!=attack.getMyPlayer())
+				{
+					board[y][x+1].setHealth(board[y][x+1].getHealth() - attack.getAttack());
+				}
+				break;
+			case 2: //[y+1][x]
+				if(board[y+1][x] != null && board[y+1][x].getMyPlayer()!=attack.getMyPlayer())
+				{
+					board[y+1][x].setHealth(board[y+1][x].getHealth() - attack.getAttack());
+				}
+				break;
+			case 3: //[y][x-1]
+				if(board[y][x-1] != null && board[y][x-1].getMyPlayer()!=attack.getMyPlayer())
+				{
+					board[y][x-1].setHealth(board[y][x-1].getHealth() - attack.getAttack());
+				}
+				break;
+			}
+		}
+	}
 	
 	
 	public static boolean checkWin(Player playerOne, Player playerTwo) // checks to see if the player has won
