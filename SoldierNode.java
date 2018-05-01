@@ -32,5 +32,4 @@ public class SoldierNode {
 		this.nextUnit = nextUnit;
 	}
 
-	
 }
