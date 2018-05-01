@@ -182,27 +182,39 @@ public class Driver {
 			switch (compass)
 			{
 			case 0: //[y-1][x]
-				if(board[y-1][x] != null && board[y-1][x].getMyPlayer()!=attack.getMyPlayer())
+				if (y > 0)
 				{
-					board[y-1][x].setHealth(board[y-1][x].getHealth() - attack.getAttack());
+					if(board[y-1][x] != null && board[y-1][x].getMyPlayer()!=attack.getMyPlayer())
+					{
+						board[y-1][x].setHealth(board[y-1][x].getHealth() - attack.getAttack());
+					}
 				}
 				break;
 			case 1: //[y][x+1]
-				if(board[y][x+1] != null && board[y][x+1].getMyPlayer()!=attack.getMyPlayer())
+				if (x < 7)
 				{
-					board[y][x+1].setHealth(board[y][x+1].getHealth() - attack.getAttack());
-				}
+					if(board[y][x+1] != null && board[y][x+1].getMyPlayer()!=attack.getMyPlayer())
+					{
+						board[y][x+1].setHealth(board[y][x+1].getHealth() - attack.getAttack());
+					}
+				}	
 				break;
 			case 2: //[y+1][x]
-				if(board[y+1][x] != null && board[y+1][x].getMyPlayer()!=attack.getMyPlayer())
+				if (y < 7)
 				{
-					board[y+1][x].setHealth(board[y+1][x].getHealth() - attack.getAttack());
+					if(board[y+1][x] != null && board[y+1][x].getMyPlayer()!=attack.getMyPlayer())
+					{	
+						board[y+1][x].setHealth(board[y+1][x].getHealth() - attack.getAttack());
+					}
 				}
 				break;
 			case 3: //[y][x-1]
-				if(board[y][x-1] != null && board[y][x-1].getMyPlayer()!=attack.getMyPlayer())
+				if (x > 0)
 				{
-					board[y][x-1].setHealth(board[y][x-1].getHealth() - attack.getAttack());
+					if(board[y][x-1] != null && board[y][x-1].getMyPlayer()!=attack.getMyPlayer())
+					{
+						board[y][x-1].setHealth(board[y][x-1].getHealth() - attack.getAttack());
+					}
 				}
 				break;
 			}
