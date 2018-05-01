@@ -1,8 +1,8 @@
 
 public class Player {
-	private String name = "";
-	private LinkedList myGuys;
-	private int roundCounter = 0;
+	private String name = ""; // initialize name variable for player names
+	private LinkedList myGuys; // initialize the linked list for the army called myGuys
+	private int roundCounter = 0; // each player has a round counter
 
 	
 	Player()
@@ -41,7 +41,8 @@ public class Player {
 		this.roundCounter = roundCounter;
 	}
 
-	public void setMyGuys(LinkedList myGuys) {
+	public void setMyGuys(LinkedList myGuys)
+	{
 		this.myGuys = myGuys;
 	}
 	
