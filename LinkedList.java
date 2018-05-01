@@ -60,12 +60,12 @@ public class LinkedList {
 			if(current.getNextUnit() == null)
 			{
 				System.out.println("Index not found for LinkedList.java function killByIndex.");
+				i = 100;
 			}
 			else
 			{
-				i = 100;
+				current = current.getNextUnit();
 			}
-			current = current.getNextUnit();
 		}
 		return current.getMyGuy();
 	}
