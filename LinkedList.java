@@ -52,6 +52,24 @@ public class LinkedList {
 		return ret;
 	}
 	
+	public Soldier getByIndex(int index)
+	{
+		SoldierNode current = head;
+		for(int i = 0; i < index && current != null; i++)
+		{
+			if(current.getNextUnit() == null)
+			{
+				System.out.println("Index not found for LinkedList.java function killByIndex.");
+				i = 100;
+			}
+			else
+			{
+				current = current.getNextUnit();
+			}
+		}
+		return current.getMyGuy();
+	}
+	
 	public void killByIndex(int index)
 	{
 		SoldierNode current = head;
