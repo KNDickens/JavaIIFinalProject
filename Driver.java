@@ -3,6 +3,7 @@ Austin Taylor Reynolds & Kyle Dickens
 Final Java 2 Poject: Turn Based Strategy Phalanx Alpha
 5/2/2018
 */
+
 import java.io.IOException;
 import java.util.Scanner;
 

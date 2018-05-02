@@ -1,3 +1,8 @@
+/*
+Austin Taylor Reynolds & Kyle Dickens
+Final Java 2 Poject: Turn Based Strategy Phalanx Alpha
+5/2/2018
+*/
 
 public class Banner extends Soldier{
 	//Low Attack, High Health, Low Range, Adjacent Units move as phalanx
@@ -9,3 +14,4 @@ public class Banner extends Soldier{
 	}
 
 }
+// Problems? None
