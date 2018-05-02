@@ -1,8 +1,13 @@
+/*
+Austin Taylor Reynolds & Kyle Dickens
+Final Java 2 Poject: Turn Based Strategy Phalanx Alpha
+5/2/2018
+*/
 
 public class SoldierNode {
 	
-	private Soldier myGuy;
-	private SoldierNode nextUnit;
+	private Soldier myGuy; // myGuy is the data in the current node
+	private SoldierNode nextUnit; // nextUnit is the next soldier in the list
 	
 	SoldierNode()
 	{
@@ -15,6 +20,8 @@ public class SoldierNode {
 		myGuy = guy;
 		nextUnit = null;
 	}
+	
+	// Auto Generated Getters and Setters from Eclipse Source
 	
 	public Soldier getMyGuy() {
 		return myGuy;
@@ -33,3 +40,4 @@ public class SoldierNode {
 	}
 
 }
+//Problems? None
