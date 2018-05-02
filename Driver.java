@@ -14,7 +14,10 @@ public class Driver {
 		System.out.println("Banner units have low attack, high health, and low range. They are used to link melee units into a phalanx");
 		System.out.println("Phalanx groups attack and move as one powerful entity.");
 		// explanation of what the pieces are
-		System.out.println("The player with the most health at the end of the game wins.");
+		System.out.println("");
+		System.out.println("Games last 10 rounds or until a player no longer has any units.");
+		System.out.println("The player with the most total unit health at the end of the game wins.");
+		System.out.println("");
 		
 		Player playerOne = new Player(); // initializing player one
 		Player playerTwo = new Player(); // initializing player two
@@ -31,7 +34,7 @@ public class Driver {
 		input.nextLine(); // garbage catcher
 		System.out.println("Enter Player Two's Name: "); // prompts the user to input a name
 		playerTwo.setName(input.nextLine()); // reads in the next line as a string and sets it to player two's name
-		System.out.println(playerOne.getName() + " please select the units you will field. You get 8 Soldiers. \n" +
+		System.out.println(playerTwo.getName() + " please select the units you will field. You get 8 Soldiers. \n" +
 				"(0) Melee, (1) Ranged, (2) Banner"); // prompts the user for input to build the army list
 		for(int i = 0; i < 8; i++) // loop 8 times
 		{
@@ -56,10 +59,6 @@ public class Driver {
 		
 		Player current = playerOne; // sets current player to player one
 		
-		System.out.println(current.getName() + "'s turn. Please select a unit."); // prompts the user to select a unit
-		
-		showBoard(board); // shows the board
-		
 		do { 
 			if(current == playerOne) // if the current player is player one
 			{
@@ -81,11 +80,12 @@ public class Driver {
 	public static Player playTurn(Player current, Soldier[][] board) // play turn
 	{
 		Scanner turnInput = new Scanner(System.in); // initialize an input used for the turn called turnInput
-		System.out.println(current.getName() + "'s turn: "); // prompts the user to take their turn
 		showBoard(board); // displays the board
+		System.out.println(current.getName() + "'s turn: "); // prompts the user to take their turn
 		System.out.println("Please select the unit you wish move");
 		int soldierSelect = turnInput.nextInt();
 		System.out.println("Select the direction you would like to move them.");
+		System.out.println("0 is North, 1 is East, 2 is South, 3 is West.");
 		int moveSelect = turnInput.nextInt();
 		moveSoldier(current.getMyGuys().getByIndex(soldierSelect), moveSelect, board);
 		return null;
@@ -154,19 +154,19 @@ public class Driver {
 			}
 			if (move.getType() == "banner")			
 			{
-				if(x<7)				
+				if(x<7 && board[y][x+1] != move && board[y][x+1].getMyPlayer() == move.getMyPlayer())				
 				{
 					moveSoldier(board[y][x+1], compass, board);
 				}
-				if(y<7)				
+				if(y<7 && board[y+1][x] != move && board[y+1][x].getMyPlayer() == move.getMyPlayer())				
 				{
 					moveSoldier(board[y+1][x], compass, board);
 				}
-				if(x>0)
+				if(x>0 && board[y][x-1] != move && board[y][x-1].getMyPlayer() == move.getMyPlayer())
 				{	
 					moveSoldier(board[y][x-1], compass, board);
 				}
-				if(y>0)				
+				if(y>0 && board[y-1][x] != move && board[y-1][x].getMyPlayer() == move.getMyPlayer())				
 				{
 					moveSoldier(board[y-1][x], compass, board);
 				}
@@ -182,27 +182,59 @@ public class Driver {
 			switch (compass)
 			{
 			case 0: //[y-1][x]
-				if(board[y-1][x] != null && board[y-1][x].getMyPlayer()!=attack.getMyPlayer())
+				if (y > 0)
 				{
-					board[y-1][x].setHealth(board[y-1][x].getHealth() - attack.getAttack());
+					if(board[y-1][x] != null && board[y-1][x].getMyPlayer()!=attack.getMyPlayer())
+					{
+						board[y-1][x].setHealth(board[y-1][x].getHealth() - attack.getAttack());
+						if (board[y-1][x].getHealth() < 1)
+						{
+							board[y-1][x].getMyPlayer().getMyGuys().killByIndex(
+								board[y-1][x].getMyPlayer().getMyGuys().findMe(board[y-1][x]));
+						}
+					}
 				}
 				break;
 			case 1: //[y][x+1]
-				if(board[y][x+1] != null && board[y][x+1].getMyPlayer()!=attack.getMyPlayer())
+				if (x < 7)
 				{
-					board[y][x+1].setHealth(board[y][x+1].getHealth() - attack.getAttack());
-				}
+					if(board[y][x+1] != null && board[y][x+1].getMyPlayer()!=attack.getMyPlayer())
+					{
+						board[y][x+1].setHealth(board[y][x+1].getHealth() - attack.getAttack());
+						if (board[y][x+1].getHealth() < 1)
+						{
+							board[y][x+1].getMyPlayer().getMyGuys().killByIndex(
+								board[y][x+1].getMyPlayer().getMyGuys().findMe(board[y][x+1]));
+						}
+					}
+				}	
 				break;
 			case 2: //[y+1][x]
-				if(board[y+1][x] != null && board[y+1][x].getMyPlayer()!=attack.getMyPlayer())
+				if (y < 7)
 				{
-					board[y+1][x].setHealth(board[y+1][x].getHealth() - attack.getAttack());
+					if(board[y+1][x] != null && board[y+1][x].getMyPlayer()!=attack.getMyPlayer())
+					{	
+						board[y+1][x].setHealth(board[y+1][x].getHealth() - attack.getAttack());
+						if (board[y+1][x].getHealth() < 1)
+						{
+							board[y+1][x].getMyPlayer().getMyGuys().killByIndex(
+								board[y+1][x].getMyPlayer().getMyGuys().findMe(board[y+1][x]));
+						}						
+					}
 				}
 				break;
 			case 3: //[y][x-1]
-				if(board[y][x-1] != null && board[y][x-1].getMyPlayer()!=attack.getMyPlayer())
+				if (x > 0)
 				{
-					board[y][x-1].setHealth(board[y][x-1].getHealth() - attack.getAttack());
+					if(board[y][x-1] != null && board[y][x-1].getMyPlayer()!=attack.getMyPlayer())
+					{
+						board[y][x-1].setHealth(board[y][x-1].getHealth() - attack.getAttack());
+						if (board[y][x-1].getHealth() < 1)
+						{
+							board[y][x-1].getMyPlayer().getMyGuys().killByIndex(
+								board[y][x-1].getMyPlayer().getMyGuys().findMe(board[y][x-1]));
+						}
+					}
 				}
 				break;
 			}
