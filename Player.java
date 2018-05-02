@@ -1,3 +1,8 @@
+/*
+Austin Taylor Reynolds & Kyle Dickens
+Final Java 2 Poject: Turn Based Strategy Phalanx Alpha
+5/2/2018
+*/
 
 public class Player {
 	private String name = ""; // initialize name variable for player names
@@ -9,6 +14,8 @@ public class Player {
 	{
 		myGuys = new LinkedList();
 	}
+	
+	// Auto Generated Getters and Setters
 	
 	public String getName() {
 		return name;
@@ -59,3 +66,5 @@ public class Player {
 		}
 	}
 }
+
+//Problems? None

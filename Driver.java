@@ -1,3 +1,8 @@
+/*
+Austin Taylor Reynolds & Kyle Dickens
+Final Java 2 Poject: Turn Based Strategy Phalanx Alpha
+5/2/2018
+*/
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -18,6 +23,7 @@ public class Driver {
 		System.out.println("Games last 10 rounds or until a player no longer has any units.");
 		System.out.println("The player with the most total unit health at the end of the game wins.");
 		System.out.println("");
+		// explanation of how to play the game
 		
 		Player playerOne = new Player(); // initializing player one
 		Player playerTwo = new Player(); // initializing player two
@@ -154,19 +160,19 @@ public class Driver {
 			}
 			if (move.getType() == "banner")			
 			{
-				if(x<7 && board[y][x+1] != move && board[y][x+1].getMyPlayer() == move.getMyPlayer())				
+				if(x<7 && board[y][x+1] != null && board[y][x+1].getType() == "melee" && board[y][x+1].getMyPlayer() == move.getMyPlayer())			
 				{
 					moveSoldier(board[y][x+1], compass, board);
 				}
-				if(y<7 && board[y+1][x] != move && board[y+1][x].getMyPlayer() == move.getMyPlayer())				
+				if(y<7 && board[y][x+1] != null && board[y][x+1].getType() == "melee" && board[y][x+1].getMyPlayer() == move.getMyPlayer())				
 				{
 					moveSoldier(board[y+1][x], compass, board);
 				}
-				if(x>0 && board[y][x-1] != move && board[y][x-1].getMyPlayer() == move.getMyPlayer())
+				if(x>0 && board[y][x+1] != null && board[y][x+1].getType() == "melee" && board[y][x+1].getMyPlayer() == move.getMyPlayer())
 				{	
 					moveSoldier(board[y][x-1], compass, board);
 				}
-				if(y>0 && board[y-1][x] != move && board[y-1][x].getMyPlayer() == move.getMyPlayer())				
+				if(y>0 && board[y][x+1] != null && board[y][x+1].getType() == "melee" && board[y][x+1].getMyPlayer() == move.getMyPlayer())				
 				{
 					moveSoldier(board[y-1][x], compass, board);
 				}
@@ -317,3 +323,5 @@ public class Driver {
 	}
 	
 }
+
+//Problems? None
