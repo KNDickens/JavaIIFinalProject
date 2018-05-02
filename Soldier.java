@@ -27,25 +27,16 @@ public abstract class Soldier implements Movable <Soldier>{
 		this.setRange(range); // sets this unit's range
 		setMyPlayer(null);
 	}
-	
-	
-	// Auto Generated getters and setters from Eclipse Source
-	
-	public void Move(int compass) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Soldier Linked() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void MoveAll(int compass) {
-		// TODO Auto-generated method stub
-		
-	}
-
+  
+	//Part of the Movable vestigial code.
+	//public void Move(int compass) {
+	//}
+	//public Soldier Linked() {
+		//return null;
+	//}
+	//public void MoveAll(int compass) {
+	//}
+  
 	public int getHealth() {
 		return health;
 	}

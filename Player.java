@@ -53,7 +53,7 @@ public class Player {
 		this.myGuys = myGuys;
 	}
 	
-	public void addSoldier(int choice)
+	public void addSoldier(int choice) //Spawns a soldier
 	{
 		switch (choice)
 		{

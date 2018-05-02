@@ -17,7 +17,8 @@ public class Driver {
 		
 		System.out.println("Melee units are high attack with high health low range.");
 		System.out.println("Ranged units have low attack, low health, but high range.");
-		System.out.println("Banner units have low attack, high health, and low range. They are used to link melee units into a phalanx");
+		System.out.println("Banner units have low attack, high health, and low range. They are used to " +
+								"link melee units into a phalanx");
 		System.out.println("Phalanx groups attack and move as one powerful entity.");
 		// explanation of what the pieces are
 		System.out.println("");
@@ -80,7 +81,8 @@ public class Driver {
 				current.roundIncremenet(); // increment the round counter
 				current = playerOne; // sets the player to player two
 			}
-			end = checkWin(playerOne, playerTwo); // checks to see if the round counter has hit 10 rounds, if a player has lost all of their
+			end = checkWin(playerOne, playerTwo); // checks to see if the round counter has hit 10 rounds, 
+													//if a player has lost all of their
 		}while (end != true); // cycles between player one and player two until 10 turns pass
 	}
 
@@ -102,144 +104,152 @@ public class Driver {
 	
 	public static void moveSoldier(Soldier move, int compass, Soldier[][] board)	
 	{
-		if (move != null)			
+		if (move != null)			//ensures we were passed a soldier, banners broke this early
 		{
-			int x = -1,y = -1; 
-			for(int i = 0; i < 8; i++)			
+			int x = -1,y = -1; 		//declare and initialize array locations
+			for(int i = 0; i < 8; i++)			//find the array location of the soldier
 			{
-				for(int j = 0; j < 8; j++)				
+				for(int j = 0; j < 8; j++)				//its a double loop
 				{
-					if(board[i][j] == move)					
+					if(board[i][j] == move)					//found the location
 					{
-						y=i;
+						y=i;			//Record the location
 						x=j;
 					}
 				}
 			}
-			switch (compass)			
+			switch (compass)			//What direction were we moving
 			{
 			case 0: //north
-				if (y > 0)				
+				if (y > 0)						//not at board edge
 				{
-					if (board[y-1][x] == null)					
+					if (board[y-1][x] == null)	//empty space	
 					{
-						board[y-1][x] = move;
-						board[y][x] = null;
+						board[y-1][x] = move;	//Move the soldier
+						board[y][x] = null;		//Empty the previous spot
 					}
 				}
 				break;
 			case 1: //east
-				if (x < 7)				
+				if (x < 7)						//not at board edge
 				{
-					if (board[y][x+1] == null)					
+					if (board[y][x+1] == null)	//empty space	
 					{
-						board[y][x+1] = move;
-						board[y][x] = null;
+						board[y][x+1] = move;	//move the soldier
+						board[y][x] = null;		//empty the previous spot
 					}
 				}
 				break;
 			case 2: //south
-				if ( y < 7 )				
+				if ( y < 7 )					//etc
 				{
-					if (board[y+1][x] == null)					
+					if (board[y+1][x] == null)	//etc				
 					{
-						board[y+1][x] = move;
-						board[y][x] = null;
+						board[y+1][x] = move;	//etc
+						board[y][x] = null;		//etc
 					}
 				}
 				break;
 			case 3: // west
-				if (x > 0)				
+				if (x > 0)						//etc
 				{
-					if (board[y][x-1] == null)					
+					if (board[y][x-1] == null)	//etc					
 					{
-						board[y][x-1] = move;
-						board[y][x] = null;
+						board[y][x-1] = move;	//etc
+						board[y][x] = null;		//etc
 					}
 				}
 				break;
-			}
-			if (move.getType() == "banner")			
+			} //NEW THING
+			if (move.getType() == "banner")			//Did you move a banner
 			{
-				if(x<7 && board[y][x+1] != null && board[y][x+1].getType() == "melee" && board[y][x+1].getMyPlayer() == move.getMyPlayer())			
-				{
-					moveSoldier(board[y][x+1], compass, board);
+				if(x<7 && board[y][x+1] != null && board[y][x+1].getType() == "melee" && 
+						board[y][x+1].getMyPlayer() == move.getMyPlayer())	//not at board edge. space not empty.
+				{															//soldier is melee. soldier belongs to you
+					moveSoldier(board[y][x+1], compass, board);	//Move him too. (Recursion)
 				}
-				if(y<7 && board[y][x+1] != null && board[y][x+1].getType() == "melee" && board[y][x+1].getMyPlayer() == move.getMyPlayer())				
+				if(y<7 && board[y+1][x] != null && board[y+1][x].getType() == "melee" && 
+						board[y+1][x].getMyPlayer() == move.getMyPlayer())	//Etc. Etc. Etc. Etc.
 				{
-					moveSoldier(board[y+1][x], compass, board);
+					moveSoldier(board[y+1][x], compass, board);	//Etc.
 				}
-				if(x>0 && board[y][x+1] != null && board[y][x+1].getType() == "melee" && board[y][x+1].getMyPlayer() == move.getMyPlayer())
+				if(x>0 && board[y][x-1] != null && board[y][x-1].getType() == "melee" && 
+						board[y][x-1].getMyPlayer() == move.getMyPlayer())	//Etc. Etc. Etc. Etc.
 				{	
-					moveSoldier(board[y][x-1], compass, board);
+					moveSoldier(board[y][x-1], compass, board);	//Etc.
 				}
-				if(y>0 && board[y][x+1] != null && board[y][x+1].getType() == "melee" && board[y][x+1].getMyPlayer() == move.getMyPlayer())				
+				if(y>0 && board[y-1][x] != null && board[y-1][x].getType() == "melee"  && 
+						board[y-1][x].getMyPlayer() == move.getMyPlayer())	//Etc. Etc. Etc. Etc.
 				{
-					moveSoldier(board[y-1][x], compass, board);
+					moveSoldier(board[y-1][x], compass, board);	//Etc.
 				}
 			}
-			attack(x,y,board,compass,move);
+			attack(x,y,board,compass,move); //After movement, Attack
 		}
 	}
 	
 	public static void attack(int x, int y, Soldier[][] board, int compass, Soldier attack)
 	{
-		for (int i = 0; i < attack.getRange(); i++)
+		for (int i = 1; i <= attack.getRange(); i++) //Range checker
 		{
 			switch (compass)
 			{
 			case 0: //[y-1][x]
-				if (y > 0)
+				if (y > 0+i) //Board edge
 				{
-					if(board[y-1][x] != null && board[y-1][x].getMyPlayer()!=attack.getMyPlayer())
+					if(board[y-i][x] != null && board[y-i][x].getMyPlayer()!=attack.getMyPlayer()) 	//isn't empty or ally
 					{
-						board[y-1][x].setHealth(board[y-1][x].getHealth() - attack.getAttack());
-						if (board[y-1][x].getHealth() < 1)
+						board[y-i][x].setHealth(board[y-i][x].getHealth() - attack.getAttack());	//Subtraction of health
+						if (board[y-i][x].getHealth() < 1)	//Did you kill him?
 						{
-							board[y-1][x].getMyPlayer().getMyGuys().killByIndex(
-								board[y-1][x].getMyPlayer().getMyGuys().findMe(board[y-1][x]));
+							board[y-i][x].getMyPlayer().getMyGuys().killByIndex(		//Run the kill function
+								board[y-i][x].getMyPlayer().getMyGuys().findMe(board[y-i][x]));
+							board[y-i][x] = null; //Empty the location
 						}
 					}
 				}
 				break;
 			case 1: //[y][x+1]
-				if (x < 7)
+				if (x < 7-i) //etc.
 				{
-					if(board[y][x+1] != null && board[y][x+1].getMyPlayer()!=attack.getMyPlayer())
+					if(board[y][x+i] != null && board[y][x+i].getMyPlayer()!=attack.getMyPlayer()) //etc etc
 					{
-						board[y][x+1].setHealth(board[y][x+1].getHealth() - attack.getAttack());
-						if (board[y][x+1].getHealth() < 1)
+						board[y][x+i].setHealth(board[y][x+i].getHealth() - attack.getAttack());	//etc
+						if (board[y][x+i].getHealth() < 1)	//etc
 						{
-							board[y][x+1].getMyPlayer().getMyGuys().killByIndex(
-								board[y][x+1].getMyPlayer().getMyGuys().findMe(board[y][x+1]));
+							board[y][x+i].getMyPlayer().getMyGuys().killByIndex(		//etc
+								board[y][x+i].getMyPlayer().getMyGuys().findMe(board[y][x+i]));
+							board[y][x+i] = null;	//etc
 						}
 					}
 				}	
 				break;
 			case 2: //[y+1][x]
-				if (y < 7)
+				if (y < 7-i)	//etc
 				{
-					if(board[y+1][x] != null && board[y+1][x].getMyPlayer()!=attack.getMyPlayer())
+					if(board[y+i][x] != null && board[y+i][x].getMyPlayer()!=attack.getMyPlayer())	//etc etc
 					{	
-						board[y+1][x].setHealth(board[y+1][x].getHealth() - attack.getAttack());
-						if (board[y+1][x].getHealth() < 1)
+						board[y+i][x].setHealth(board[y+i][x].getHealth() - attack.getAttack());	//etc
+						if (board[y+i][x].getHealth() < 1)		//etc
 						{
-							board[y+1][x].getMyPlayer().getMyGuys().killByIndex(
-								board[y+1][x].getMyPlayer().getMyGuys().findMe(board[y+1][x]));
+							board[y+i][x].getMyPlayer().getMyGuys().killByIndex(	//etc
+								board[y+i][x].getMyPlayer().getMyGuys().findMe(board[y+i][x]));
+							board[y+i][x] = null;	//etc
 						}						
 					}
 				}
 				break;
 			case 3: //[y][x-1]
-				if (x > 0)
+				if (x > 0+i)	//etc
 				{
-					if(board[y][x-1] != null && board[y][x-1].getMyPlayer()!=attack.getMyPlayer())
+					if(board[y][x-i] != null && board[y][x-i].getMyPlayer()!=attack.getMyPlayer())	//etc etc
 					{
-						board[y][x-1].setHealth(board[y][x-1].getHealth() - attack.getAttack());
-						if (board[y][x-1].getHealth() < 1)
+						board[y][x-i].setHealth(board[y][x-i].getHealth() - attack.getAttack());	//etc
+						if (board[y][x-i].getHealth() < 1)		//etc
 						{
-							board[y][x-1].getMyPlayer().getMyGuys().killByIndex(
-								board[y][x-1].getMyPlayer().getMyGuys().findMe(board[y][x-1]));
+							board[y][x-i].getMyPlayer().getMyGuys().killByIndex(	//etc
+								board[y][x-i].getMyPlayer().getMyGuys().findMe(board[y][x-i]));
+							board[y][x-i] = null;	//etc
 						}
 					}
 				}
@@ -251,7 +261,8 @@ public class Driver {
 	
 	public static boolean checkWin(Player playerOne, Player playerTwo) // checks to see if the player has won
 	{
-		if(playerTwo.getRoundCounter() >= 10 || playerOne.getMyGuys().getTotalHealth() == 0 || playerTwo.getMyGuys().getTotalHealth() == 0)
+		if(playerTwo.getRoundCounter() >= 10 || playerOne.getMyGuys().getTotalHealth() == 0 || 
+				playerTwo.getMyGuys().getTotalHealth() == 0)
 		{ // The game will end if the players play for 10 rounds or if a player runs out of units
 			if(playerOne.getMyGuys().getTotalHealth()>playerTwo.getMyGuys().getTotalHealth())
 			{ // if player one has more health than player two player one wins
@@ -324,5 +335,4 @@ public class Driver {
 	}
 	
 }
-
-//Problems? None
+//Problems: Week long vacation. Array Out of Bounds errors, Null Pointer Errors, Infinite Movement bugs, stack overflow error.
