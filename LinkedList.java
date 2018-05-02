@@ -1,100 +1,96 @@
 
 public class LinkedList {
 	
-	private SoldierNode head;
+	private SoldierNode head; //Top of the list
 	
-	LinkedList()
+	LinkedList() //Default constructor
 	{
 		head = null;
 	}
 	
-	public SoldierNode getHead()
+	public SoldierNode getHead() //getter
 	{
 		return head;
 	}
-	public void setHead(SoldierNode head)
+	public void setHead(SoldierNode head)// setter
 	{
 		this.head = head;
 	}
 
-	public int findMe(Soldier me)
+	public int findMe(Soldier me) // finds the index of the node that the current soldier belongs in
 	{
-		int ret = -1;
-		SoldierNode current = head;
-		while (current != null)
+		int ret = -1; //declare and initialize the return value
+		SoldierNode current = head; //start at top of list
+		while (current != null) //still on list
 		{
-			ret++;
-			if (current.getMyGuy() == me)
+			ret++; //count index up
+			if (current.getMyGuy() == me) //is this me
 			{
-				return ret;
+				return ret; //return the index
 			}
-			current = current.getNextUnit();
+			current = current.getNextUnit(); //else get next on list
 		}
-		ret = -1;
-		return ret;
+		ret = -1; //error code
+		return ret; //return error code
 	}
 	
-	public void addToHead(SoldierNode nNode)
+	public void addToHead(SoldierNode nNode) //adds to the list
 	{
-		nNode.setNextUnit(head);
-		head = nNode;
+		nNode.setNextUnit(head); //New node points to current head
+		head = nNode; //becomes top of the list
 	}
 	
-	public int getTotalHealth()
+	public int getTotalHealth() //counts the total health in the list
 	{
-		int ret = 0;
-		SoldierNode current = head;
-		while (current != null)
+		int ret = 0; //declare and initialize the return value
+		SoldierNode current = head; //start at top of list
+		while (current != null) //still on list
 		{
-			ret += current.getMyGuy().getHealth();
-			current = current.getNextUnit();
+			ret += current.getMyGuy().getHealth(); //add current soldiers health to the total
+			current = current.getNextUnit(); // get the next soldier
 		}
-		return ret;
+		return ret; //return the total
 	}
 	
-	public Soldier getByIndex(int index)
+	public Soldier getByIndex(int index) //get the index'th soldier
 	{
-		SoldierNode current = head;
-		for(int i = 0; i < index && current != null; i++)
+		SoldierNode current = head; // start at top of list
+		for(int i = 0; i < index && current != null; i++) //stay on the list and count to the index
 		{
-			System.out.println(i + " " + index);
-			if(current.getNextUnit() == null)
+			if(current.getNextUnit() == null) // prompts for error message
 			{
-				System.out.println("Index not found for LinkedList.java function killByIndex.");
+				System.out.println("Index not found for LinkedList.java function getByIndex."); //cout's an error
+				i = 100; //force exit loop
 			}
 			else
 			{
-				i = 100;
+				current = current.getNextUnit(); //get the next guy
 			}
-			current = current.getNextUnit();
 		}
-		return current.getMyGuy();
+		return current.getMyGuy(); //return the guy
 	}
 	
-	public void killByIndex(int index)
+	public void killByIndex(int index) //kills the index'th soldier
 	{
-		SoldierNode current = head;
+		SoldierNode current = head; //start at top of list
 		SoldierNode previous = null;
-		for(int i = 0; i < index && current != null; i++)
+		for(int i = 0; i < index && current != null; i++) //stay on the list and count to the index
 		{
-			if(current.getNextUnit() == null)
+			if(current.getNextUnit() == null) //prompts error message
 			{
-				System.out.println("Index not found for LinkedList.java function killByIndex.");
+				System.out.println("Index not found for LinkedList.java function killByIndex."); //cout's an error
+				i = 100;  //force exit loop
 			}
-			else
-			{
-				i = 100;
-			}
-			previous = current;
-			current = current.getNextUnit();
+			previous = current; //last guy is this guy
+			current = current.getNextUnit(); //this guy is the next guy
 		}
-		if (previous == null)
+		if (previous == null) //if head
 		{
-			head = current.getNextUnit();
+			head = current.getNextUnit(); //resets head
 		}
 		else
 		{
-			previous.setNextUnit(current.getNextUnit());
+			previous.setNextUnit(current.getNextUnit());//otherwise, bypass this guy, let the garbage collector take care of it
 		}
 	}
 }
