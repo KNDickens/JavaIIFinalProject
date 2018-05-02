@@ -1,3 +1,9 @@
+/*
+Austin Taylor Reynolds & Kyle Dickens
+Final Java 2 Poject: Turn Based Strategy Phalanx Alpha
+5/2/2018
+*/
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -19,6 +25,7 @@ public class Driver {
 		System.out.println("Games last 10 rounds or until a player no longer has any units.");
 		System.out.println("The player with the most total unit health at the end of the game wins.");
 		System.out.println("");
+		// explanation of how to play the game
 		
 		Player playerOne = new Player(); // initializing player one
 		Player playerTwo = new Player(); // initializing player two
